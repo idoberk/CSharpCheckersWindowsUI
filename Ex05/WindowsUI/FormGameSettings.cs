@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using static Ex05.WindowsUI.UIManager;
 
 namespace Ex05.WindowsUI
 {
@@ -9,6 +10,40 @@ namespace Ex05.WindowsUI
         {
             Application.EnableVisualStyles();
             InitializeComponent();
+        }
+
+        public string Player1Name
+        {
+            get { return TextboxPlayer1.Text; } 
+            set { TextboxPlayer1.Text = value; }
+        }
+
+        public string Player2Name
+        {
+            get { return TextboxPlayer2.Text; }
+            set { TextboxPlayer2.Text = value; }
+        }
+
+        public int BoardSize
+        {
+            get
+            {
+                int size = 0;
+                if (RadioButtonSmallBoard.Checked)
+                {
+                    size = (int)eBoardSize.Small;
+                }
+                else if (RadioButtonMediumBoard.Checked)
+                {
+                    size = (int)eBoardSize.Medium;
+                }
+                else
+                {
+                    size = (int)eBoardSize.Large;
+                }
+
+                return size;
+            }
         }
 
         private void CheckboxPlayer2_CheckedChanged(object sender, System.EventArgs e)
@@ -25,7 +60,7 @@ namespace Ex05.WindowsUI
                 MessageBox.Show(
                     "All fields must be filled!",
                     "Empty fields found",
-                    MessageBoxButtons.RetryCancel);
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {

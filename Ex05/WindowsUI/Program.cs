@@ -4,8 +4,8 @@
     {
         public static void Main()
         {
-            FormGameSettings form = new FormGameSettings();
-            form.ShowDialog();
+            UIManager form = new UIManager();
+            form.Run();
         }
     }
 }

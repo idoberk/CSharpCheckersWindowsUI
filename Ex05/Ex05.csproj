@@ -44,6 +44,11 @@
     <Compile Include="GameLogic\MovePiece.cs" />
     <Compile Include="GameLogic\PiecePosition.cs" />
     <Compile Include="GameLogic\Player.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="WindowsUI\FormGame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +62,7 @@
       <DependentUpon>FormGameSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowsUI\Program.cs" />
+    <Compile Include="WindowsUI\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -66,12 +72,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowsUI\FormGame.resx">
       <DependentUpon>FormGame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsUI\FormGameSettings.resx">
       <DependentUpon>FormGameSettings.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WhiteTile.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GreyTile.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackKingPiece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlackRegularPiece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WhiteRegularPiece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WhiteKingPiece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueRegularPiece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueKingPiece.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

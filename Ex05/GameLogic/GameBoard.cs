@@ -1,36 +1,39 @@
-﻿//using System.Collections.Generic;
-//using static Ex05.Player;
+﻿using System.Collections.Generic;
+using static Ex05.Player;
 
-//namespace Ex05
-//{
-//    public class GameBoard
-//    {
-//        private char[,] m_Board;
-//        private readonly int r_BoardSize;
-//        private List<PiecePosition> m_Player1Pieces;
-//        private List<PiecePosition> m_Player2Pieces;
+namespace Ex05
+{
+    public class GameBoard
+    {
+        private char[,] m_Board;
+        private readonly int r_BoardSize;
+        private List<PiecePosition> m_Player1Pieces;
+        private List<PiecePosition> m_Player2Pieces;
 
-//        private enum eBoardSize
-//        {
-//            Small = 6,
-//            Medium = 8,
-//            Large = 10
-//        }
+        private enum eBoardSize
+        {
+            Small = 6,
+            Medium = 8,
+            Large = 10
+        }
 
-//        public GameBoard(int i_GameBoardSize)
-//        {
-//            r_BoardSize = i_GameBoardSize;
-//            m_Board = new char[r_BoardSize, r_BoardSize];
-//            m_Player1Pieces = new List<PiecePosition>();
-//            m_Player2Pieces = new List<PiecePosition>();
+        public GameBoard(int i_GameBoardSize)
+        {
+            r_BoardSize = i_GameBoardSize;
+            m_Board = new char[r_BoardSize, r_BoardSize];
+            m_Player1Pieces = new List<PiecePosition>();
+            m_Player2Pieces = new List<PiecePosition>();
+        }
 
-//            InitializeBoard();
-//        }
+        //            InitializeBoard();
+        //        }
 
-//        public int GetBoardSize
-//        {
-//            get { return r_BoardSize; }
-//        }
+        public int GetBoardSize
+        {
+            get { return r_BoardSize; }
+        }
+    }
+}
 
 //        public List<PiecePosition> Player1Pieces
 //        {

@@ -1,14 +1,21 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using static Ex05.Player;
+﻿using System;
+using System.Collections.Generic;
+using static Ex05.Player;
 
-//namespace Ex05
-//{
-//    // TODO: Check encapsulation.
-//    // TODO: Remove all console related code.
-//    public class GameManager
-//    {
-//        private GameBoard m_GameBoard;
+namespace Ex05
+{
+    // TODO: Check encapsulation.
+    // TODO: Remove all console related code.
+    public class GameManager
+    {
+        private GameBoard m_GameBoard;
+
+        public GameBoard GameBoard
+        {
+            get { return m_GameBoard; }
+        }
+    }
+}
 //        private Player m_Player1;
 //        private Player m_Player2;
 //        private Player m_CurrentPlayer;

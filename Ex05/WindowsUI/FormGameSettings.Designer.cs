@@ -108,6 +108,7 @@
             // TextboxPlayer1
             // 
             this.TextboxPlayer1.Location = new System.Drawing.Point(99, 85);
+            this.TextboxPlayer1.MaxLength = 12;
             this.TextboxPlayer1.Name = "TextboxPlayer1";
             this.TextboxPlayer1.Size = new System.Drawing.Size(89, 20);
             this.TextboxPlayer1.TabIndex = 6;
@@ -128,6 +129,7 @@
             // 
             this.TextboxPlayer2.Enabled = false;
             this.TextboxPlayer2.Location = new System.Drawing.Point(99, 115);
+            this.TextboxPlayer2.MaxLength = 12;
             this.TextboxPlayer2.Name = "TextboxPlayer2";
             this.TextboxPlayer2.Size = new System.Drawing.Size(89, 20);
             this.TextboxPlayer2.TabIndex = 8;
