@@ -6,11 +6,13 @@ namespace Ex05.WindowsUI
 {
     public partial class FormGame : Form
     {
-        // private TableLayoutPanel m_GameBoardTable;
         private const int k_PictureBoxDimension = 80;
+        private bool m_IsPictureBoxPressed = false;
         private Label m_LabelPlayer1NameAndScore = new Label();
         private Label m_LabelPlayer2NameAndScore = new Label();
-        private PictureBox[,] m_PictureBoxMatrix;
+        //private PictureBox[,] m_PictureBoxMatrix;
+        private PictureBoxPlayerPieces m_PictureBoxPressed = null;
+        private PictureBoxPlayerPieces[,] m_PictureBoxMatrix;
         private readonly FormGameSettings r_FormGameSettings = new FormGameSettings();
 
         public FormGame()
@@ -21,14 +23,13 @@ namespace Ex05.WindowsUI
 
         void r_FormGameSettings_FormClosed(object sender, FormClosedEventArgs e)
         {
-            m_PictureBoxMatrix = new PictureBox[r_FormGameSettings.BoardSize, r_FormGameSettings.BoardSize];
+            //m_PictureBoxMatrix = new PictureBox[r_FormGameSettings.BoardSize, r_FormGameSettings.BoardSize];
+            m_PictureBoxMatrix = new PictureBoxPlayerPieces[r_FormGameSettings.BoardSize, r_FormGameSettings.BoardSize];
             setFormGameBoardSize();
         }
 
         private void setFormGameBoardSize()
         {
-            //initGameBoardTableLayout();
-            // this.Size = new Size(m_GameBoardTable.Width + 40, m_GameBoardTable.Height + 90);
             setPictureBoxTable();
             initPlayerLabels();
             this.Size = new Size(k_PictureBoxDimension * r_FormGameSettings.BoardSize + 40, k_PictureBoxDimension * r_FormGameSettings.BoardSize + 90);
@@ -55,14 +56,18 @@ namespace Ex05.WindowsUI
             {
                 for(int j = 0; j < r_FormGameSettings.BoardSize; j++)
                 {
-                    PictureBox currentPictureBox = new PictureBox();
+                    //PictureBox currentPictureBox = new PictureBox();
+                    PictureBoxPlayerPieces currentPictureBox = new PictureBoxPlayerPieces(i, j);
+
+                    //setGameBoardCell(ref currentPictureBox, i, j);
                     setGameBoardCell(ref currentPictureBox, i, j);
 
                     if((i + j) % 2 == 1)
                     {
-                        setPictureBoxInnerImage(currentPictureBox, i);
+                        setPictureBoxInnerImage(currentPictureBox, i, j);
                     }
 
+                    // currentPictureBox.Click += pictureBox_Click;
                     m_PictureBoxMatrix[i, j] = currentPictureBox;
                     this.Controls.Add(currentPictureBox);
                 }
@@ -75,7 +80,9 @@ namespace Ex05.WindowsUI
             {
                 for(int j = 0; j < r_FormGameSettings.BoardSize; j++)
                 {
-                    PictureBox currentPictureBox = new PictureBox();
+                    //PictureBox currentPictureBox = new PictureBox();
+                    PictureBoxPlayerPieces currentPictureBox = new PictureBoxPlayerPieces(i, j);
+
                     setGameBoardCell(ref currentPictureBox, i, j);
                     m_PictureBoxMatrix[i, j] = currentPictureBox;
                     this.Controls.Add(currentPictureBox);
@@ -89,36 +96,52 @@ namespace Ex05.WindowsUI
             {
                 for(int j = 0; j < r_FormGameSettings.BoardSize; j++)
                 {
-                    PictureBox currentPictureBox = new PictureBox();
+                    //PictureBox currentPictureBox = new PictureBox();
+                    PictureBoxPlayerPieces currentPictureBox = new PictureBoxPlayerPieces(i, j);
+
                     setGameBoardCell(ref currentPictureBox, i, j);
 
                     if((i + j) % 2 == 1)
                     {
-                        setPictureBoxInnerImage(currentPictureBox, i);
+                        setPictureBoxInnerImage(currentPictureBox, i, j);
                     }
 
+                    // currentPictureBox.Click += pictureBox_Click;
                     m_PictureBoxMatrix[i, j] = currentPictureBox;
                     this.Controls.Add(currentPictureBox);
                 }
             }
         }
 
-        private void setGameBoardCell(ref PictureBox io_CurrentPictureBox, int i_CurrentRow, int i_CurrentCol)
+        private void setGameBoardCell(ref PictureBoxPlayerPieces io_CurrentPictureBox, int i_CurrentRow, int i_CurrentCol)
         {
             io_CurrentPictureBox.Size = new Size(k_PictureBoxDimension, k_PictureBoxDimension);
             io_CurrentPictureBox.Location = new Point(k_PictureBoxDimension * i_CurrentCol + 10, k_PictureBoxDimension * i_CurrentRow + 40);
             io_CurrentPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            io_CurrentPictureBox.Image = (i_CurrentRow + i_CurrentCol) % 2 == 0 ? Properties.Resources.WhiteTile : Properties.Resources.GreyTile;
+            io_CurrentPictureBox.BackgroundImage = (i_CurrentRow + i_CurrentCol) % 2 == 0 ? Properties.Resources.WhiteTile : Properties.Resources.GreyTile;
+
+            if (io_CurrentPictureBox.BackgroundImage == Properties.Resources.WhiteTile)
+            {
+                io_CurrentPictureBox.Enabled = false;
+                io_CurrentPictureBox.IsPictureBoxEnabled = false;
+            }
+            
         }
 
-        private void setPictureBoxInnerImage(PictureBox i_CurrentPictureBox, int i_CurrentRow)
+        private void setPictureBoxInnerImage(PictureBoxPlayerPieces i_CurrentPictureBox, int i_CurrentRow, int i_CurrentCol)
         {
-            PictureBox playerPieceImage = new PictureBox();
-            playerPieceImage.Size = new Size(i_CurrentPictureBox.Width - 10, i_CurrentPictureBox.Height - 10);
-            playerPieceImage.Location = new Point(5, 5);
+            //PictureBox playerPieceImage = new PictureBox();
+            PictureBoxPlayerPieces playerPieceImage = new PictureBoxPlayerPieces(i_CurrentRow, i_CurrentCol);
+
+            playerPieceImage.Size = i_CurrentPictureBox.Size;
+            playerPieceImage.Location = new Point(0, 0);
             playerPieceImage.SizeMode = PictureBoxSizeMode.StretchImage;
             playerPieceImage.BackColor = Color.Transparent;
             playerPieceImage.Image = i_CurrentRow < r_FormGameSettings.BoardSize / 2 ? Properties.Resources.BlackRegularPiece : Properties.Resources.BlueRegularPiece;
+            playerPieceImage.Enabled = true;
+            playerPieceImage.IsPictureBoxEnabled = true;
+            playerPieceImage.Click += pictureBox_Click;
+            i_CurrentPictureBox.IsPictureBoxEnabled = true;
 
             i_CurrentPictureBox.Controls.Add(playerPieceImage);
         }
@@ -152,78 +175,33 @@ namespace Ex05.WindowsUI
             m_LabelPlayer1NameAndScore.Font = new Font("Arial", 12, FontStyle.Bold);
             m_LabelPlayer2NameAndScore.Font = new Font("Arial", 12, FontStyle.Bold);
 
-
             this.Controls.Add(m_LabelPlayer1NameAndScore);
             this.Controls.Add(m_LabelPlayer2NameAndScore);
         }
 
-        //private void initPlayerLabels()
-        //{
-        //    float gameBoardTableCellWidth = m_GameBoardTable.Width / (float)r_FormGameSettings.BoardSize;
-        //    int player1AlignedCell = 1;
-        //    int player2AlignedCell = 4;
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+            //PictureBox pictureBoxPressed = sender as PictureBox;
+            PictureBoxPlayerPieces pictureBoxPressed = sender as PictureBoxPlayerPieces;
 
-        //    if (r_FormGameSettings.BoardSize == 8)
-        //    {
-        //        player1AlignedCell = 2;
-        //        player2AlignedCell = 5;
-        //    }
-        //    else if (r_FormGameSettings.BoardSize == 10)
-        //    {
-        //        player1AlignedCell = 3;
-        //        player2AlignedCell = 6;
-        //    }
-
-        //    m_LabelPlayer1NameAndScore.Text = $"{r_FormGameSettings.Player1Name}: 0"; //{};//Score}";
-        //    m_LabelPlayer1NameAndScore.AutoSize = true;
-        //    m_LabelPlayer2NameAndScore.Text = $"{r_FormGameSettings.Player2Name}: 0"; //{};//Score}";
-        //    m_LabelPlayer2NameAndScore.AutoSize = true;
-        //    m_LabelPlayer1NameAndScore.Location = new Point(
-        //        m_GameBoardTable.Left + (int)(player1AlignedCell * gameBoardTableCellWidth) - 5, //  - m_LabelPlayer1NameAndScore.Width,
-        //        m_GameBoardTable.Top - 30);
-        //    m_LabelPlayer2NameAndScore.Location = new Point(
-        //        m_GameBoardTable.Left + (int)(player2AlignedCell * gameBoardTableCellWidth) - 5, // - m_LabelPlayer2NameAndScore.Width,
-        //        m_GameBoardTable.Top - 30);
-
-        //    m_LabelPlayer1NameAndScore.Font = new Font("Arial", 12, FontStyle.Bold);
-        //    m_LabelPlayer2NameAndScore.Font = new Font("Arial", 12, FontStyle.Bold);
-
-
-        //    this.Controls.Add(m_LabelPlayer1NameAndScore);
-        //    this.Controls.Add(m_LabelPlayer2NameAndScore);
-        //}
-
-        //private void initGameBoardTableLayout()
-        //{
-        //    m_GameBoardTable = new TableLayoutPanel();
-
-        //    m_GameBoardTable.Location = new Point(10, 40);
-
-        //    m_GameBoardTable.ColumnCount = r_FormGameSettings.BoardSize;
-        //    m_GameBoardTable.RowCount = r_FormGameSettings.BoardSize;
-
-        //    m_GameBoardTable.ColumnStyles.Clear();
-        //    m_GameBoardTable.RowStyles.Clear();
-
-        //    m_GameBoardTable.Size = new Size(
-        //        80 * r_FormGameSettings.BoardSize,
-        //        80 * r_FormGameSettings.BoardSize);
-
-        //    for (int i = 0; i < r_FormGameSettings.BoardSize; i++)
-        //    {
-        //        m_GameBoardTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / r_FormGameSettings.BoardSize));
-        //    }
-
-        //    for(int i = 0; i < r_FormGameSettings.BoardSize; i++)
-        //    {
-        //        m_GameBoardTable.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / r_FormGameSettings.BoardSize));
-        //    }
-
-
-        //    m_GameBoardTable.CellBorderStyle = TableLayoutPanelCellBorderStyle.InsetDouble;
-
-        //    this.Controls.Add(m_GameBoardTable);
-        //}
+            if (pictureBoxPressed.IsPictureBoxEnabled)
+            {
+                if (m_PictureBoxPressed == null)// && !m_IsPictureBoxPressed)
+                {
+                    m_PictureBoxPressed = pictureBoxPressed;
+                    //m_IsPictureBoxPressed = true;
+                    pictureBoxPressed.IsPictureBoxEnabled = false;
+                    m_PictureBoxPressed.BackgroundImage = Properties.Resources.PressedTile;
+                }
+            }
+            else if(m_PictureBoxPressed == pictureBoxPressed)
+            {
+                m_PictureBoxPressed = null;
+                //m_IsPictureBoxPressed = false;
+                pictureBoxPressed.IsPictureBoxEnabled = true;
+                pictureBoxPressed.BackgroundImage = Properties.Resources.GreyTile;
+            }
+        }
 
         private void FormGame_Load(object sender, EventArgs e)
         {

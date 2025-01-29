@@ -61,6 +61,9 @@
     <Compile Include="WindowsUI\FormGameSettings.Designer.cs">
       <DependentUpon>FormGameSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="WindowsUI\PictureBoxPlayerPieces.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WindowsUI\Program.cs" />
     <Compile Include="WindowsUI\UIManager.cs" />
   </ItemGroup>
@@ -106,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BlueKingPiece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PressedTile.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
