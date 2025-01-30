@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex05.WindowsUI;
+using System;
 using System.Collections.Generic;
 using static Ex05.Player;
 
@@ -8,9 +9,11 @@ namespace Ex05
     // TODO: Remove all console related code.
     public class GameManager
     {
+        public EventHandler NewGameRoundStarted;
+
         private GameBoard m_GameBoard;
-        private Player m_Player1;
-        private Player m_Player2;
+        //private Player m_Player1;
+        //private Player m_Player2;
         private Player m_CurrentPlayer;
         private Player m_NextPlayer;
         private List<MovePiece> m_CaptureMoves = new List<MovePiece>();
@@ -32,6 +35,21 @@ namespace Ex05
             get { return m_CaptureMoves.Count > 0; }
         }
 
+        public Player CurrentPlayer
+        {
+            get { return m_CurrentPlayer; }
+        }
+
+        public Player NextPlayer
+        {
+            get { return m_NextPlayer; }
+        }
+
+        public List<MovePiece> CaptureMoves
+        {
+            get { return m_CaptureMoves; }
+        }
+
         //public void StartGame()
         //{
         //    string playerInput = string.Empty;
@@ -39,19 +57,19 @@ namespace Ex05
         //    bool isGameFinished = false;
 
         //    m_GameOver = false;
-        //    WelcomeMessage();
+        //////    WelcomeMessage();
 
-        //    string player1Name = GetPlayerName();
+        //////    string player1Name = GetPlayerName();
 
-        //    m_Player1 = new Player(player1Name, (char)ePlayerPieceType.OPlayer, ePlayerType.Human, 1);
-        //    m_CurrentPlayer = m_Player1;
-        //    m_GameBoard = new GameBoard(GetBoardSize());
+        //////m_Player1 = new Player(player1Name, (char) ePlayerPieceType.OPlayer, ePlayerType.Human, 1);
+        //////m_CurrentPlayer = m_Player1;
+        //////    m_GameBoard = new GameBoard(GetBoardSize());
 
-        //    int player2Type = GetPlayerType();
-        //    string player2Name = player2Type == 1 ? GetPlayerName() : "Computer";
+        //////    int player2Type = GetPlayerType();
+        //////    string player2Name = player2Type == 1 ? GetPlayerName() : "Computer";
 
-        //    m_Player2 = new Player(player2Name, (char)ePlayerPieceType.XPlayer, (ePlayerType)player2Type, 2);
-        //    m_NextPlayer = m_Player2;
+        //////    m_Player2 = new Player(player2Name, (char)ePlayerPieceType.XPlayer, (ePlayerType)player2Type, 2);
+        //////    m_NextPlayer = m_Player2;
         //    DisplayGame(m_GameBoard);
         //    DisplayCurrentPlayerTurn(m_CurrentPlayer);
         //    while (!isGameFinished)
@@ -107,7 +125,17 @@ namespace Ex05
         //            }
         //        }
         //    }
-        //}
+
+        public void InitGameSettings(string i_Player1Name, string i_Player2Name, int i_BoardSize, bool i_IsComputer)
+        {
+            int player2Type = i_IsComputer ? (int)ePlayerType.Computer : (int)ePlayerType.Human;
+
+            m_CurrentPlayer = new Player(i_Player1Name, (char)ePlayerPieceType.OPlayer, ePlayerType.Human, (int)ePlayerNumber.Player1);
+            m_NextPlayer = new Player(i_Player2Name, (char)ePlayerPieceType.XPlayer, (ePlayerType)player2Type, (int)ePlayerNumber.Player2);
+            m_GameBoard = new GameBoard(i_BoardSize);
+
+            OnNewGameRoundStarted();
+        }
 
         public bool IsMoveExecuted(MovePiece i_AttemptedMove)
         {
@@ -162,7 +190,7 @@ namespace Ex05
                 m_LastMovePosition = i_PlayerMove.ToPosition;
                 m_CaptureMoves.Clear();
                 addMovesToList(i_PlayerMove.ToPosition, m_GameBoard.GetPieceAtPosition(m_LastMovePosition), i_IsCapture);
-                UpdateLastMove(parseMoveToString(i_PlayerMove));
+                // UpdateLastMove(parseMoveToString(i_PlayerMove));
 
                 if (m_CaptureMoves.Count == 0)
                 {
@@ -174,7 +202,7 @@ namespace Ex05
             {
                 m_GameBoard.MovePlayerPiece(i_PlayerMove);
                 m_LastMovePosition = null;
-                UpdateLastMove(parseMoveToString(i_PlayerMove));
+                // UpdateLastMove(parseMoveToString(i_PlayerMove));
                 m_IsTurnFinished = true;
             }
 
@@ -184,17 +212,17 @@ namespace Ex05
             }
         }
 
-        public void UpdateLastMove(string i_PlayerMoveInput)
-        {
-            if (m_CurrentPlayer == m_Player1)
-            {
-                m_Player1.LastMove = i_PlayerMoveInput;
-            }
-            else
-            {
-                m_Player2.LastMove = i_PlayerMoveInput;
-            }
-        }
+        //public void UpdateLastMove(string i_PlayerMoveInput)
+        //{
+        //    if (m_CurrentPlayer == m_Player1)
+        //    {
+        //        m_Player1.LastMove = i_PlayerMoveInput;
+        //    }
+        //    else
+        //    {
+        //        m_Player2.LastMove = i_PlayerMoveInput;
+        //    }
+        //}
 
         private string parseMoveToString(MovePiece i_PlayedMove)
         {
@@ -291,7 +319,8 @@ namespace Ex05
 
             if (IsPieceKing(charAtPosition))
             {
-                currentPlayerPiece = currentPlayerPiece == m_Player1.PlayerPiece ? (char)ePlayerPieceType.OPlayerKing : (char)ePlayerPieceType.XPlayerKing;
+                //currentPlayerPiece = currentPlayerPiece == m_Player1.PlayerPiece ? (char)ePlayerPieceType.OPlayerKing : (char)ePlayerPieceType.XPlayerKing;
+                currentPlayerPiece = currentPlayerPiece == CurrentPlayer.PlayerPiece ? (char)ePlayerPieceType.OPlayerKing : (char)ePlayerPieceType.XPlayerKing;
             }
 
             bool isPlayerPiece = charAtPosition == currentPlayerPiece;
@@ -394,17 +423,19 @@ namespace Ex05
 
         public void UpdateScore()
         {
-            int player1Value = calculatePiecesValue(m_Player1.PlayerNumber);
-            int player2Value = calculatePiecesValue(m_Player2.PlayerNumber);
+            //int player1Value = calculatePiecesValue(m_Player1.PlayerNumber);
+            //int player2Value = calculatePiecesValue(m_Player2.PlayerNumber);
+            int player1Value = calculatePiecesValue(CurrentPlayer.PlayerNumber);
+            int player2Value = calculatePiecesValue(NextPlayer.PlayerNumber);
             int scoreDifference = Math.Abs(player2Value - player1Value);
 
-            if (m_CurrentPlayer != m_Player1)
+            if (m_CurrentPlayer != CurrentPlayer)//m_Player1)
             {
-                m_Player1.Score += scoreDifference;
+                CurrentPlayer.Score += scoreDifference;
             }
             else
             {
-                m_Player2.Score += scoreDifference;
+                NextPlayer.Score += scoreDifference;
             }
         }
 
@@ -450,14 +481,19 @@ namespace Ex05
             return hasNoPieces;
         }
 
-        private void resetGame()
+        public void ResetGame()
         {
-            m_CurrentPlayer = m_Player1;
-            m_NextPlayer = m_Player2;
+            //    m_CurrentPlayer = m_Player1;
+            if (CurrentPlayer.PlayerNumber == (int)ePlayerNumber.Player2)
+            {
+                switchTurn();
+            }
+
+            // m_NextPlayer = m_Player2;
             m_CaptureMoves.Clear();
             m_RegularMoves.Clear();
-            m_Player1.LastMove = string.Empty;
-            m_Player2.LastMove = string.Empty;
+            //m_Player1.LastMove = string.Empty;
+            //m_Player2.LastMove = string.Empty;
             m_GameBoard.Player2Pieces.Clear();
             m_GameBoard.Player1Pieces.Clear();
             m_GameBoard.InitializeBoard();
@@ -498,6 +534,16 @@ namespace Ex05
             else
             {
                 
+            }
+        }
+
+        protected virtual void OnNewGameRoundStarted()
+        {
+            EventArgs e = new EventArgs();
+
+            if (NewGameRoundStarted != null)
+            {
+                NewGameRoundStarted(this, e);
             }
         }
     }

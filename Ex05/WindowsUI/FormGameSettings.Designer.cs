@@ -28,139 +28,139 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LabelBoardSize = new System.Windows.Forms.Label();
-            this.RadioButtonSmallBoard = new System.Windows.Forms.RadioButton();
-            this.RadioButtonMediumBoard = new System.Windows.Forms.RadioButton();
-            this.RadioButtonLargeBoard = new System.Windows.Forms.RadioButton();
-            this.LabelPlayers = new System.Windows.Forms.Label();
-            this.LabelPlayer1 = new System.Windows.Forms.Label();
-            this.TextboxPlayer1 = new System.Windows.Forms.TextBox();
-            this.CheckboxPlayer2 = new System.Windows.Forms.CheckBox();
-            this.TextboxPlayer2 = new System.Windows.Forms.TextBox();
-            this.ButtonDone = new System.Windows.Forms.Button();
+            this.labelBoardSize = new System.Windows.Forms.Label();
+            this.radioButtonSmallBoard = new System.Windows.Forms.RadioButton();
+            this.radioButtonMediumBoard = new System.Windows.Forms.RadioButton();
+            this.radioButtonLargeBoard = new System.Windows.Forms.RadioButton();
+            this.labelPlayers = new System.Windows.Forms.Label();
+            this.labelPlayer1 = new System.Windows.Forms.Label();
+            this.textboxPlayer1 = new System.Windows.Forms.TextBox();
+            this.checkboxPlayer2 = new System.Windows.Forms.CheckBox();
+            this.textboxPlayer2 = new System.Windows.Forms.TextBox();
+            this.buttonDone = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // LabelBoardSize
+            // labelBoardSize
             // 
-            this.LabelBoardSize.AutoSize = true;
-            this.LabelBoardSize.Location = new System.Drawing.Point(13, 13);
-            this.LabelBoardSize.Name = "LabelBoardSize";
-            this.LabelBoardSize.Size = new System.Drawing.Size(61, 13);
-            this.LabelBoardSize.TabIndex = 0;
-            this.LabelBoardSize.Text = "Board Size:";
-            this.LabelBoardSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelBoardSize.AutoSize = true;
+            this.labelBoardSize.Location = new System.Drawing.Point(13, 13);
+            this.labelBoardSize.Name = "labelBoardSize";
+            this.labelBoardSize.Size = new System.Drawing.Size(61, 13);
+            this.labelBoardSize.TabIndex = 0;
+            this.labelBoardSize.Text = "Board Size:";
+            this.labelBoardSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // RadioButtonSmallBoard
+            // radioButtonSmallBoard
             // 
-            this.RadioButtonSmallBoard.Checked = true;
-            this.RadioButtonSmallBoard.FlatAppearance.BorderSize = 0;
-            this.RadioButtonSmallBoard.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.RadioButtonSmallBoard.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.RadioButtonSmallBoard.Location = new System.Drawing.Point(26, 35);
-            this.RadioButtonSmallBoard.Name = "RadioButtonSmallBoard";
-            this.RadioButtonSmallBoard.Size = new System.Drawing.Size(48, 17);
-            this.RadioButtonSmallBoard.TabIndex = 1;
-            this.RadioButtonSmallBoard.TabStop = true;
-            this.RadioButtonSmallBoard.Text = "6 x 6";
-            this.RadioButtonSmallBoard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioButtonSmallBoard.UseVisualStyleBackColor = true;
+            this.radioButtonSmallBoard.Checked = true;
+            this.radioButtonSmallBoard.FlatAppearance.BorderSize = 0;
+            this.radioButtonSmallBoard.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.radioButtonSmallBoard.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButtonSmallBoard.Location = new System.Drawing.Point(26, 35);
+            this.radioButtonSmallBoard.Name = "radioButtonSmallBoard";
+            this.radioButtonSmallBoard.Size = new System.Drawing.Size(48, 17);
+            this.radioButtonSmallBoard.TabIndex = 1;
+            this.radioButtonSmallBoard.TabStop = true;
+            this.radioButtonSmallBoard.Text = "6 x 6";
+            this.radioButtonSmallBoard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButtonSmallBoard.UseVisualStyleBackColor = true;
             // 
-            // RadioButtonMediumBoard
+            // radioButtonMediumBoard
             // 
-            this.RadioButtonMediumBoard.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.RadioButtonMediumBoard.Location = new System.Drawing.Point(80, 35);
-            this.RadioButtonMediumBoard.Name = "RadioButtonMediumBoard";
-            this.RadioButtonMediumBoard.Size = new System.Drawing.Size(48, 17);
-            this.RadioButtonMediumBoard.TabIndex = 2;
-            this.RadioButtonMediumBoard.Text = "8 x 8";
-            this.RadioButtonMediumBoard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioButtonMediumBoard.UseVisualStyleBackColor = true;
+            this.radioButtonMediumBoard.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButtonMediumBoard.Location = new System.Drawing.Point(80, 35);
+            this.radioButtonMediumBoard.Name = "radioButtonMediumBoard";
+            this.radioButtonMediumBoard.Size = new System.Drawing.Size(48, 17);
+            this.radioButtonMediumBoard.TabIndex = 2;
+            this.radioButtonMediumBoard.Text = "8 x 8";
+            this.radioButtonMediumBoard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButtonMediumBoard.UseVisualStyleBackColor = true;
             // 
-            // RadioButtonLargeBoard
+            // radioButtonLargeBoard
             // 
-            this.RadioButtonLargeBoard.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.RadioButtonLargeBoard.Location = new System.Drawing.Point(134, 35);
-            this.RadioButtonLargeBoard.Name = "RadioButtonLargeBoard";
-            this.RadioButtonLargeBoard.Size = new System.Drawing.Size(60, 17);
-            this.RadioButtonLargeBoard.TabIndex = 3;
-            this.RadioButtonLargeBoard.Text = "10 x 10";
-            this.RadioButtonLargeBoard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioButtonLargeBoard.UseVisualStyleBackColor = true;
+            this.radioButtonLargeBoard.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radioButtonLargeBoard.Location = new System.Drawing.Point(134, 35);
+            this.radioButtonLargeBoard.Name = "radioButtonLargeBoard";
+            this.radioButtonLargeBoard.Size = new System.Drawing.Size(60, 17);
+            this.radioButtonLargeBoard.TabIndex = 3;
+            this.radioButtonLargeBoard.Text = "10 x 10";
+            this.radioButtonLargeBoard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButtonLargeBoard.UseVisualStyleBackColor = true;
             // 
-            // LabelPlayers
+            // labelPlayers
             // 
-            this.LabelPlayers.AutoSize = true;
-            this.LabelPlayers.Location = new System.Drawing.Point(13, 60);
-            this.LabelPlayers.Name = "LabelPlayers";
-            this.LabelPlayers.Size = new System.Drawing.Size(44, 13);
-            this.LabelPlayers.TabIndex = 4;
-            this.LabelPlayers.Text = "Players:";
+            this.labelPlayers.AutoSize = true;
+            this.labelPlayers.Location = new System.Drawing.Point(13, 60);
+            this.labelPlayers.Name = "labelPlayers";
+            this.labelPlayers.Size = new System.Drawing.Size(44, 13);
+            this.labelPlayers.TabIndex = 4;
+            this.labelPlayers.Text = "Players:";
             // 
-            // LabelPlayer1
+            // labelPlayer1
             // 
-            this.LabelPlayer1.Location = new System.Drawing.Point(22, 85);
-            this.LabelPlayer1.Name = "LabelPlayer1";
-            this.LabelPlayer1.Size = new System.Drawing.Size(50, 20);
-            this.LabelPlayer1.TabIndex = 5;
-            this.LabelPlayer1.Text = "Player 1:";
-            this.LabelPlayer1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelPlayer1.Location = new System.Drawing.Point(22, 85);
+            this.labelPlayer1.Name = "labelPlayer1";
+            this.labelPlayer1.Size = new System.Drawing.Size(50, 20);
+            this.labelPlayer1.TabIndex = 5;
+            this.labelPlayer1.Text = "Player 1:";
+            this.labelPlayer1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // TextboxPlayer1
+            // textboxPlayer1
             // 
-            this.TextboxPlayer1.Location = new System.Drawing.Point(99, 85);
-            this.TextboxPlayer1.MaxLength = 12;
-            this.TextboxPlayer1.Name = "TextboxPlayer1";
-            this.TextboxPlayer1.Size = new System.Drawing.Size(89, 20);
-            this.TextboxPlayer1.TabIndex = 6;
+            this.textboxPlayer1.Location = new System.Drawing.Point(99, 85);
+            this.textboxPlayer1.MaxLength = 12;
+            this.textboxPlayer1.Name = "textboxPlayer1";
+            this.textboxPlayer1.Size = new System.Drawing.Size(89, 20);
+            this.textboxPlayer1.TabIndex = 6;
             // 
-            // CheckboxPlayer2
+            // checkboxPlayer2
             // 
-            this.CheckboxPlayer2.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.CheckboxPlayer2.Location = new System.Drawing.Point(26, 115);
-            this.CheckboxPlayer2.Name = "CheckboxPlayer2";
-            this.CheckboxPlayer2.Size = new System.Drawing.Size(67, 20);
-            this.CheckboxPlayer2.TabIndex = 7;
-            this.CheckboxPlayer2.Text = "Player 2:";
-            this.CheckboxPlayer2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.CheckboxPlayer2.UseVisualStyleBackColor = true;
-            this.CheckboxPlayer2.CheckedChanged += new System.EventHandler(this.CheckboxPlayer2_CheckedChanged);
+            this.checkboxPlayer2.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.checkboxPlayer2.Location = new System.Drawing.Point(26, 115);
+            this.checkboxPlayer2.Name = "checkboxPlayer2";
+            this.checkboxPlayer2.Size = new System.Drawing.Size(67, 20);
+            this.checkboxPlayer2.TabIndex = 7;
+            this.checkboxPlayer2.Text = "Player 2:";
+            this.checkboxPlayer2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkboxPlayer2.UseVisualStyleBackColor = true;
+            this.checkboxPlayer2.CheckedChanged += new System.EventHandler(this.CheckboxPlayer2_CheckedChanged);
             // 
-            // TextboxPlayer2
+            // textboxPlayer2
             // 
-            this.TextboxPlayer2.Enabled = false;
-            this.TextboxPlayer2.Location = new System.Drawing.Point(99, 115);
-            this.TextboxPlayer2.MaxLength = 12;
-            this.TextboxPlayer2.Name = "TextboxPlayer2";
-            this.TextboxPlayer2.Size = new System.Drawing.Size(89, 20);
-            this.TextboxPlayer2.TabIndex = 8;
-            this.TextboxPlayer2.Text = "[Computer]";
+            this.textboxPlayer2.Enabled = false;
+            this.textboxPlayer2.Location = new System.Drawing.Point(99, 115);
+            this.textboxPlayer2.MaxLength = 12;
+            this.textboxPlayer2.Name = "textboxPlayer2";
+            this.textboxPlayer2.Size = new System.Drawing.Size(89, 20);
+            this.textboxPlayer2.TabIndex = 8;
+            this.textboxPlayer2.Text = "[Computer]";
             // 
-            // ButtonDone
+            // buttonDone
             // 
-            this.ButtonDone.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.ButtonDone.Location = new System.Drawing.Point(113, 146);
-            this.ButtonDone.Name = "ButtonDone";
-            this.ButtonDone.Size = new System.Drawing.Size(75, 23);
-            this.ButtonDone.TabIndex = 9;
-            this.ButtonDone.Text = "Done";
-            this.ButtonDone.UseVisualStyleBackColor = true;
-            this.ButtonDone.Click += new System.EventHandler(this.ButtonDone_Click);
+            this.buttonDone.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.buttonDone.Location = new System.Drawing.Point(113, 146);
+            this.buttonDone.Name = "buttonDone";
+            this.buttonDone.Size = new System.Drawing.Size(75, 23);
+            this.buttonDone.TabIndex = 9;
+            this.buttonDone.Text = "Done";
+            this.buttonDone.UseVisualStyleBackColor = true;
+            this.buttonDone.Click += new System.EventHandler(this.ButtonDone_Click);
             // 
             // FormGameSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(214, 181);
-            this.Controls.Add(this.ButtonDone);
-            this.Controls.Add(this.TextboxPlayer2);
-            this.Controls.Add(this.CheckboxPlayer2);
-            this.Controls.Add(this.TextboxPlayer1);
-            this.Controls.Add(this.LabelPlayer1);
-            this.Controls.Add(this.LabelPlayers);
-            this.Controls.Add(this.RadioButtonLargeBoard);
-            this.Controls.Add(this.RadioButtonMediumBoard);
-            this.Controls.Add(this.RadioButtonSmallBoard);
-            this.Controls.Add(this.LabelBoardSize);
+            this.Controls.Add(this.buttonDone);
+            this.Controls.Add(this.textboxPlayer2);
+            this.Controls.Add(this.checkboxPlayer2);
+            this.Controls.Add(this.textboxPlayer1);
+            this.Controls.Add(this.labelPlayer1);
+            this.Controls.Add(this.labelPlayers);
+            this.Controls.Add(this.radioButtonLargeBoard);
+            this.Controls.Add(this.radioButtonMediumBoard);
+            this.Controls.Add(this.radioButtonSmallBoard);
+            this.Controls.Add(this.labelBoardSize);
             this.ForeColor = System.Drawing.SystemColors.Desktop;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
@@ -177,15 +177,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Label LabelBoardSize;
-        private System.Windows.Forms.RadioButton RadioButtonSmallBoard;
-        private System.Windows.Forms.RadioButton RadioButtonMediumBoard;
-        private System.Windows.Forms.RadioButton RadioButtonLargeBoard;
-        private System.Windows.Forms.Label LabelPlayers;
-        private System.Windows.Forms.Label LabelPlayer1;
-        private System.Windows.Forms.TextBox TextboxPlayer1;
-        private System.Windows.Forms.CheckBox CheckboxPlayer2;
-        private System.Windows.Forms.TextBox TextboxPlayer2;
-        private System.Windows.Forms.Button ButtonDone;
+        private System.Windows.Forms.Label labelBoardSize;
+        private System.Windows.Forms.RadioButton radioButtonSmallBoard;
+        private System.Windows.Forms.RadioButton radioButtonMediumBoard;
+        private System.Windows.Forms.RadioButton radioButtonLargeBoard;
+        private System.Windows.Forms.Label labelPlayers;
+        private System.Windows.Forms.Label labelPlayer1;
+        private System.Windows.Forms.TextBox textboxPlayer1;
+        private System.Windows.Forms.CheckBox checkboxPlayer2;
+        private System.Windows.Forms.TextBox textboxPlayer2;
+        private System.Windows.Forms.Button buttonDone;
     }
 }

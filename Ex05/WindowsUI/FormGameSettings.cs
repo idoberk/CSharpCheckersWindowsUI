@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using static Ex05.WindowsUI.UIManager;
 
 namespace Ex05.WindowsUI
@@ -14,14 +13,19 @@ namespace Ex05.WindowsUI
 
         public string Player1Name
         {
-            get { return TextboxPlayer1.Text; } 
-            set { TextboxPlayer1.Text = value; }
+            get { return textboxPlayer1.Text; } 
+            set { textboxPlayer1.Text = value; }
         }
 
         public string Player2Name
         {
-            get { return TextboxPlayer2.Text; }
-            set { TextboxPlayer2.Text = value; }
+            get { return textboxPlayer2.Text; }
+            set { textboxPlayer2.Text = value; }
+        }
+
+        public bool IsComputer
+        {
+            get { return !checkboxPlayer2.Checked; }
         }
 
         public int BoardSize
@@ -29,11 +33,11 @@ namespace Ex05.WindowsUI
             get
             {
                 int size = 0;
-                if (RadioButtonSmallBoard.Checked)
+                if (radioButtonSmallBoard.Checked)
                 {
                     size = (int)eBoardSize.Small;
                 }
-                else if (RadioButtonMediumBoard.Checked)
+                else if (radioButtonMediumBoard.Checked)
                 {
                     size = (int)eBoardSize.Medium;
                 }
@@ -48,14 +52,14 @@ namespace Ex05.WindowsUI
 
         private void CheckboxPlayer2_CheckedChanged(object sender, System.EventArgs e)
         {
-            TextboxPlayer2.Enabled = !TextboxPlayer2.Enabled;
+            textboxPlayer2.Enabled = !textboxPlayer2.Enabled;
 
-            this.TextboxPlayer2.Text = TextboxPlayer2.Enabled ? string.Empty : "[Computer]";
+            this.textboxPlayer2.Text = textboxPlayer2.Enabled ? string.Empty : "[Computer]";
         }
 
         private void ButtonDone_Click(object sender, System.EventArgs e)
         {
-            if (string.IsNullOrEmpty(this.TextboxPlayer1.Text) || string.IsNullOrEmpty(this.TextboxPlayer2.Text))
+            if (string.IsNullOrEmpty(this.textboxPlayer1.Text) || string.IsNullOrEmpty(this.textboxPlayer2.Text))
             {
                 MessageBox.Show(
                     "All fields must be filled!",

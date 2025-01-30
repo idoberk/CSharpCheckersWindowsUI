@@ -46,7 +46,7 @@ namespace Ex05
 
         public List<PiecePosition> GetPiecesPositionsList(int i_PlayerNumber)
         {
-            return i_PlayerNumber == 1 ? new List<PiecePosition>(Player1Pieces) : new List<PiecePosition>(Player2Pieces);
+            return i_PlayerNumber == (int)ePlayerNumber.Player1 ? new List<PiecePosition>(Player1Pieces) : new List<PiecePosition>(Player2Pieces);
         }
 
         public char GetPieceAtPosition(PiecePosition i_PiecePosition)

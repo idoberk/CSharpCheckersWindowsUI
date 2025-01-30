@@ -15,7 +15,7 @@ namespace Ex05.WindowsUI
 
         public bool IsPictureBoxEnabled
         {
-            get{ return m_IsPictureBoxEnabled; }
+            get { return m_IsPictureBoxEnabled; }
             set { m_IsPictureBoxEnabled = value; }
         }
 

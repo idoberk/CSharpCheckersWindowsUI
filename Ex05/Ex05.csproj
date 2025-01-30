@@ -61,6 +61,7 @@
     <Compile Include="WindowsUI\FormGameSettings.Designer.cs">
       <DependentUpon>FormGameSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="WindowsUI\GameSettingsEventArgs.cs" />
     <Compile Include="WindowsUI\PictureBoxPlayerPieces.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -68,7 +68,13 @@
         public enum ePlayerType
         {
             Human = 1,
-            Computer = 2
+            Computer
+        }
+
+        public enum ePlayerNumber
+        {
+            Player1 = 1,
+            Player2
         }
 
         public static bool IsPlayerNameValid(string i_PlayerName)
