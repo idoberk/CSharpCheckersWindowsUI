@@ -108,10 +108,11 @@
             // textboxPlayer1
             // 
             this.textboxPlayer1.Location = new System.Drawing.Point(99, 85);
-            this.textboxPlayer1.MaxLength = 12;
+            this.textboxPlayer1.MaxLength = 20;
             this.textboxPlayer1.Name = "textboxPlayer1";
             this.textboxPlayer1.Size = new System.Drawing.Size(89, 20);
             this.textboxPlayer1.TabIndex = 6;
+            this.textboxPlayer1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxPlayer1_KeyPress);
             // 
             // checkboxPlayer2
             // 
@@ -129,11 +130,12 @@
             // 
             this.textboxPlayer2.Enabled = false;
             this.textboxPlayer2.Location = new System.Drawing.Point(99, 115);
-            this.textboxPlayer2.MaxLength = 12;
+            this.textboxPlayer2.MaxLength = 20;
             this.textboxPlayer2.Name = "textboxPlayer2";
             this.textboxPlayer2.Size = new System.Drawing.Size(89, 20);
             this.textboxPlayer2.TabIndex = 8;
             this.textboxPlayer2.Text = "[Computer]";
+            this.textboxPlayer2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxPlayer1_KeyPress);
             // 
             // buttonDone
             // 

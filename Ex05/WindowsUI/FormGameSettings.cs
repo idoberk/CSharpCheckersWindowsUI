@@ -67,8 +67,14 @@ namespace Ex05.WindowsUI
             }
             else
             {
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+        }
+
+        private void textboxPlayer1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = (e.KeyChar == (char)Keys.Space);
         }
     }
 }

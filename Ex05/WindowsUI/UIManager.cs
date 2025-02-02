@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Ex05.GameLogic;
 
@@ -9,7 +7,6 @@ namespace Ex05.WindowsUI
 {
     public class UIManager
     {
-        // TODO: Check if eBoardSize can become a global enum class to be used in GameLogic and UI.
         public enum eBoardSize
         {
             Small = 6,
@@ -32,9 +29,9 @@ namespace Ex05.WindowsUI
 
         private void subscribeFormRelatedEvents()
         {
-            r_FormGame.MoveExecuted += MoveExecuted;
+            r_FormGame.MoveExecuted += ExecuteMove;
             r_FormGame.GameSettingsPassed += GameSettingsPassed;
-            r_FormGame.ValidMoves += ValidMovesRequested;
+            r_FormGame.GetValidMoves += ValidMovesRequested;
         }
 
         private void subscribeGameLogicRelatedEvents()
@@ -44,12 +41,11 @@ namespace Ex05.WindowsUI
             r_GameManager.GameOver += GameOver;
         }
 
-        public void UpdateEnabledTiles(List<MovePiece> i_PossibleMoves)
+        private void updateEnabledTiles(List<MovePiece> i_PossibleMoves)
         {
-            r_GameManager.getValidMoves();
+            r_GameManager.CreateValidMoves();
 
             List<PiecePosition> currentPlayerPieces = r_GameManager.GameBoard.GetPiecesPositionsList(r_GameManager.CurrentPlayer.PlayerNumber);
-            // List<MovePiece> possibleMoves = r_GameManager.RegularMoves.Concat(r_GameManager.CaptureMoves).ToList();
 
             r_FormGame.UpdateEnabledPictureBoxes(currentPlayerPieces, i_PossibleMoves);
         }
@@ -57,10 +53,10 @@ namespace Ex05.WindowsUI
         private void ValidMovesRequested(object sender, ValidMovesEventArgs e)
         {
             List<MovePiece> validMovesList = r_GameManager.GetValidMovesForPiece(e.PiecePosition);
-            UpdateEnabledTiles(validMovesList);
+            updateEnabledTiles(validMovesList);
         }
 
-        private void MoveExecuted(object sender, EventArgs e)
+        private void ExecuteMove(object sender, EventArgs e)
         {
             MoveExecutedEventArgs moveToExecute = e as MoveExecutedEventArgs;
             MovePiece movePiece = new MovePiece(moveToExecute.FromPosition, moveToExecute.ToPosition);
@@ -82,7 +78,6 @@ namespace Ex05.WindowsUI
             GameSettingsEventArgs gameSettings = e as GameSettingsEventArgs;
 
             r_GameManager.InitGameSettings(gameSettings.Player1Name, gameSettings.Player2Name, gameSettings.BoardSize, gameSettings.IsComputer);
-            // r_FormGame.UpdatePlayerScoreLabel(r_GameManager.CurrentPlayer.Score, r_GameManager.NextPlayer.Score);
         }
 
         private void NewGameRoundStarted(object sender, EventArgs e)
@@ -121,7 +116,6 @@ namespace Ex05.WindowsUI
         {
             GameOverEventArgs gameOver = e as GameOverEventArgs;
 
-            // r_FormGame.UpdatePlayerScoreLabel(r_GameManager.Player1.Score, r_GameManager.Player2.Score);
             bool isNewGame = r_FormGame.ShowGameOverMessage(gameOver.WinningMessage);
 
             if (isNewGame)

@@ -118,5 +118,8 @@
   <ItemGroup>
     <None Include="Resources\PressedTile.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PossibleMovesTile.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

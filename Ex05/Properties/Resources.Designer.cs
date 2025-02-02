@@ -113,29 +113,19 @@ namespace Ex05.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PossibleMovesTile {
+            get {
+                object obj = ResourceManager.GetObject("PossibleMovesTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PressedTile {
             get {
                 object obj = ResourceManager.GetObject("PressedTile", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap WhiteKingPiece {
-            get {
-                object obj = ResourceManager.GetObject("WhiteKingPiece", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap WhiteRegularPiece {
-            get {
-                object obj = ResourceManager.GetObject("WhiteRegularPiece", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

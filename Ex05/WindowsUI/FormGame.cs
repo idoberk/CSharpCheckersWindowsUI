@@ -8,9 +8,8 @@ namespace Ex05.WindowsUI
     public partial class FormGame : Form
     {
         private const int k_PictureBoxDimension = 80;
-        //private bool m_IsPictureBoxPressed = false;
-        private Label labelPlayer1NameAndScore = new Label();
-        private Label labelPlayer2NameAndScore = new Label();
+        private readonly Label labelPlayer1NameAndScore = new Label();
+        private readonly Label labelPlayer2NameAndScore = new Label();
         private PictureBoxPlayerPieces pictureBoxPressed = null;
         private PictureBoxPlayerPieces[,] pictureBoxMatrix;
         private readonly FormGameSettings r_FormGameSettings = new FormGameSettings();
@@ -18,25 +17,28 @@ namespace Ex05.WindowsUI
 
         public event EventHandler GameSettingsPassed;
         public event EventHandler MoveExecuted;
-        public event EventHandler<ValidMovesEventArgs> ValidMoves; 
+        public event EventHandler<ValidMovesEventArgs> GetValidMoves; 
 
         public FormGame()
         {
             InitializeComponent();
         }
 
-        void r_FormGameSettings_FormClosed(object sender, FormClosedEventArgs e)
+        private void r_FormGameSettings_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
+            if(e.CloseReason == CloseReason.UserClosing && r_FormGameSettings.DialogResult != DialogResult.OK)
             {
                 this.Close();
             }
 
             pictureBoxMatrix = new PictureBoxPlayerPieces[r_FormGameSettings.BoardSize, r_FormGameSettings.BoardSize];
+
             initFormGame();
             GameSettingsEventArgs gameSettingsEventArgs = new GameSettingsEventArgs(
-                r_FormGameSettings.Player1Name, r_FormGameSettings.Player2Name, 
-                r_FormGameSettings.BoardSize, r_FormGameSettings.IsComputer);
+                r_FormGameSettings.Player1Name,
+                r_FormGameSettings.Player2Name,
+                r_FormGameSettings.BoardSize,
+                r_FormGameSettings.IsComputer);
             OnGameSettingsPassed(gameSettingsEventArgs);
         }
 
@@ -60,7 +62,7 @@ namespace Ex05.WindowsUI
         {
             if (i_ValidMovesEventArgs != null)
             {
-                ValidMoves(this, i_ValidMovesEventArgs);
+                GetValidMoves(this, i_ValidMovesEventArgs);
             }
         }
 
@@ -89,45 +91,10 @@ namespace Ex05.WindowsUI
             {
                 for (int col = 0; col < r_FormGameSettings.BoardSize; col++)
                 {
-                    //PictureBoxPlayerPieces currentBox = new PictureBoxPlayerPieces(row, col);
-
-                    //currentBox.Size = new Size(k_PictureBoxDimension, k_PictureBoxDimension);
-                    //currentBox.Location = new Point(k_PictureBoxDimension * col + 10, k_PictureBoxDimension * row + 40);
-                    //currentBox.SizeMode = PictureBoxSizeMode.StretchImage;
-
-                    //if ((row + col) % 2 == 0)
-                    //{
-                    //    currentBox.BackgroundImage = Properties.Resources.WhiteTile;
-                    //    currentBox.Enabled = false;
-                    //    currentBox.IsPictureBoxEnabled = false;
-                    //}
-                    //else
-                    //{
-                    //    currentBox.BackgroundImage = Properties.Resources.GreyTile;
-                    //    currentBox.Enabled = true;
-                    //    currentBox.IsPictureBoxEnabled = true;
-                    //}
-
-                    //pictureBoxMatrix[row, col] = currentBox;
-                    //this.Controls.Add(currentBox);
                     createBoardTiles(row, col);
                 }
             }
-
-            //for (int row = 3; row < 5; row++)
-            //{
-            //    for (int col = 0; col < r_FormGameSettings.BoardSize; col++)
-            //    {
-            //        if ((row + col) % 2 == 1)
-            //        {
-            //            pictureBoxMatrix[row, col].Enabled = true;
-            //            pictureBoxMatrix[row, col].IsPictureBoxEnabled = true;
-            //            pictureBoxMatrix[row, col].Click += pictureBox_Click;
-            //        }
-            //    }
-            //}
         }
-        
 
         private void createBoardTiles(int i_Row, int i_Col)
         {
@@ -137,10 +104,9 @@ namespace Ex05.WindowsUI
             currentTile.Size = new Size(k_PictureBoxDimension, k_PictureBoxDimension);
             currentTile.Location = new Point(k_PictureBoxDimension * i_Col + 10, k_PictureBoxDimension * i_Row + 40);
             currentTile.SizeMode = PictureBoxSizeMode.StretchImage;
-            //currentTile.BackgroundImage = isPlayableTile ? Properties.Resources.GreyTile : Properties.Resources.WhiteTile;
-            currentTile.BackColor = isPlayableTile ? Color.Gray : Color.Azure;
+            currentTile.BackgroundImage = isPlayableTile ? Properties.Resources.GreyTile : Properties.Resources.WhiteTile;
+            currentTile.Enabled = true;
             currentTile.IsPictureBoxEnabled = false;
-            currentTile.Enabled = false;
             currentTile.Click += pictureBox_Click;
 
             pictureBoxMatrix[i_Row, i_Col] = currentTile;
@@ -164,13 +130,9 @@ namespace Ex05.WindowsUI
                     {
                         bool isTopHalf = row < r_FormGameSettings.BoardSize / 2;
 
-                        //pictureBoxMatrix[row, col].BackColor = Color.Transparent;
-                        pictureBoxMatrix[row, col].BackColor = Color.Gray;
+                        pictureBoxMatrix[row, col].BackColor = Color.Transparent;
+                        pictureBoxMatrix[row, col].BackgroundImage = Properties.Resources.GreyTile;
                         pictureBoxMatrix[row, col].Image = isTopHalf ? Properties.Resources.BlackRegularPiece : Properties.Resources.BlueRegularPiece;
-                        // pictureBoxMatrix[row, col].Click += pictureBox_Click;
-                        //PictureBoxPlayerPieces playerPiece = createPlayerPiece(row, col);
-
-                        //pictureBoxMatrix[row, col].Controls.Add(playerPiece);
                     }
                 }
             }
@@ -183,6 +145,10 @@ namespace Ex05.WindowsUI
                 for (int col = 0; col < r_FormGameSettings.BoardSize; col++)
                 {
                     pictureBoxMatrix[row, col].Image = null;
+
+                    bool isPlayableTile = (row + col) % 2 == 1;
+
+                    pictureBoxMatrix[row, col].BackgroundImage = isPlayableTile ? Properties.Resources.GreyTile : Properties.Resources.WhiteTile;
                 }
             }
 
@@ -190,54 +156,27 @@ namespace Ex05.WindowsUI
             placePlayerPieces();
         }
 
-        //private PictureBoxPlayerPieces createPlayerPiece(int i_Row, int i_Col)
-        //{
-        //    PictureBoxPlayerPieces playerPiece = new PictureBoxPlayerPieces(i_Row, i_Col);
-
-        //    playerPiece.Size = new Size(k_PictureBoxDimension, k_PictureBoxDimension);
-        //    playerPiece.Location = new Point(0, 0);
-        //    playerPiece.SizeMode = PictureBoxSizeMode.StretchImage;
-        //    playerPiece.BackColor = Color.Transparent;
-        //    playerPiece.Enabled = true;
-        //    playerPiece.IsPictureBoxEnabled = true;
-
-        //    bool isTopHalf = i_Row < r_FormGameSettings.BoardSize / 2;
-
-        //    playerPiece.Image =
-        //        isTopHalf ? Properties.Resources.BlackRegularPiece : Properties.Resources.BlueRegularPiece;
-
-        //    playerPiece.Click += pictureBox_Click;
-
-        //    return playerPiece;
-        //}
-
         private void disableAllTiles()
         {
             for(int row = 0; row < r_FormGameSettings.BoardSize; row++)
             {
                 for(int col = 0; col < r_FormGameSettings.BoardSize; col++)
                 {
+                    // pictureBoxMatrix[row, col].Enabled = false;
                     pictureBoxMatrix[row, col].IsPictureBoxEnabled = false;
-                    pictureBoxMatrix[row, col].Enabled = false;
                 }
             }
         }
 
-        public void UpdateEnabledPictureBoxes(List<PiecePosition> i_CurrentPlayerPieces, List<MovePiece> i_PossibleMoves)
+        public void UpdateEnabledPictureBoxes(List<PiecePosition> i_CurrentPlayerPiecesPositions, List<MovePiece> i_PossibleMoves)
         {
-            disableAllTiles();
-
-            foreach(PiecePosition piecePosition in i_CurrentPlayerPieces)
-            {
-                pictureBoxMatrix[piecePosition.Row, piecePosition.Col].Enabled = true;
-                pictureBoxMatrix[piecePosition.Row, piecePosition.Col].IsPictureBoxEnabled = true;
-            }
+            EnableCurrentPlayerPictureBoxes(i_CurrentPlayerPiecesPositions);
 
             foreach(MovePiece possibleMove in i_PossibleMoves)
             {
                 pictureBoxMatrix[possibleMove.ToPosition.Row, possibleMove.ToPosition.Col].Enabled = true;
                 pictureBoxMatrix[possibleMove.ToPosition.Row, possibleMove.ToPosition.Col].IsPictureBoxEnabled = true;
-                pictureBoxMatrix[possibleMove.ToPosition.Row, possibleMove.ToPosition.Col].BackColor = Color.SeaGreen;
+                pictureBoxMatrix[possibleMove.ToPosition.Row, possibleMove.ToPosition.Col].BackgroundImage = Properties.Resources.PossibleMovesTile;
                 r_HighlightedMoves.Add(pictureBoxMatrix[possibleMove.ToPosition.Row, possibleMove.ToPosition.Col]);
             }
         }
@@ -246,7 +185,7 @@ namespace Ex05.WindowsUI
         {
             foreach (PictureBoxPlayerPieces highLightedBox in r_HighlightedMoves)
             {
-                highLightedBox.BackColor = Color.Gray;
+                highLightedBox.BackgroundImage = Properties.Resources.GreyTile;
             }
 
             r_HighlightedMoves.Clear();
@@ -256,10 +195,10 @@ namespace Ex05.WindowsUI
         {
             disableAllTiles();
 
-            foreach(PiecePosition position in i_PositionsToEnable)
+            foreach(PiecePosition currentPosition in i_PositionsToEnable)
             {
-                pictureBoxMatrix[position.Row, position.Col].IsPictureBoxEnabled = true;
-                pictureBoxMatrix[position.Row, position.Col].Enabled = true;
+                pictureBoxMatrix[currentPosition.Row, currentPosition.Col].Enabled = true;
+                pictureBoxMatrix[currentPosition.Row, currentPosition.Col].IsPictureBoxEnabled = true;
             }
         }
 
@@ -311,12 +250,11 @@ namespace Ex05.WindowsUI
             int player1AlignedCell = 1;
             int player2AlignedCell = 4;
 
-            if (r_FormGameSettings.BoardSize == 8)
+            if(r_FormGameSettings.BoardSize == 8)
             {
                 player1AlignedCell = 2;
                 player2AlignedCell = 5;
-            }
-            else if (r_FormGameSettings.BoardSize == 10)
+            } else if(r_FormGameSettings.BoardSize == 10)
             {
                 player1AlignedCell = 3;
                 player2AlignedCell = 6;
@@ -378,50 +316,16 @@ namespace Ex05.WindowsUI
                 return;
             }
 
-            //if (clickedPiece.IsPictureBoxEnabled)
-            //{
-            //    if (clickedPiece.Image != null)
-            //    {
-            //        if (m_IsPictureBoxPressed || pictureBoxPressed == clickedPiece)
-            //        {
-            //            deselectCurrentPiece();
-            //        }
-            //        selectNewPiece(clickedPiece);
-            //    }
-            //    else
-            //    {
-            //        if (pictureBoxPressed != null)
-            //        {
-            //            MoveExecutedEventArgs moveToExecute = new MoveExecutedEventArgs(pictureBoxPressed.PlayerPiecePosition, clickedPiece.PlayerPiecePosition);
-            //            OnMoveExecuted(moveToExecute);
-            //            deselectCurrentPiece();
-            //        }
-            //    }
-            //    //    {
-            //    //if (m_IsPictureBoxPressed)
-            //    //{
-            //    //    if (clickedPiece.Image != null)
-            //    //    {
-            //    //        deselectCurrentPiece();
-            //    //        selectNewPiece(clickedPiece);
-            //    //    }
-            //    //    else
-            //    //    {
-            //    //        MoveExecutedEventArgs moveToExecute = new MoveExecutedEventArgs(pictureBoxPressed.PlayerPiecePosition, clickedPiece.PlayerPiecePosition);
-            //    //        OnMoveExecuted(moveToExecute);
-            //    //        deselectCurrentPiece();
-            //    //    }
-            //    //}
-            //    //else
-            //    //{
+            if(pictureBoxPressed != null && !clickedPiece.IsPictureBoxEnabled)
+            {
+                showInvalidMoveMessage();
+            }
 
-            //    //}
-            //}
-
-            if(clickedPiece == pictureBoxPressed)
+            if (clickedPiece == pictureBoxPressed)
             {
                 deselectCurrentPiece();
             }
+
             else if(pictureBoxPressed != null && clickedPiece.IsPictureBoxEnabled)
             {
                 if(clickedPiece.Image != null)
@@ -448,8 +352,7 @@ namespace Ex05.WindowsUI
 
             if (pictureBoxPressed != null)
             {
-                //pictureBoxPressed.BackgroundImage = Properties.Resources.GreyTile;
-                pictureBoxPressed.BackColor = Color.Gray;
+                pictureBoxPressed.BackgroundImage = Properties.Resources.GreyTile;
                 pictureBoxPressed = null;
             }
         }
@@ -464,8 +367,7 @@ namespace Ex05.WindowsUI
 
             if(pictureBoxPressed != null)
             {
-                //pictureBoxPressed.BackgroundImage = Properties.Resources.PressedTile;
-                pictureBoxPressed.BackColor = Color.Chocolate;
+                pictureBoxPressed.BackgroundImage = Properties.Resources.PressedTile;
             }
         }
 
@@ -473,15 +375,12 @@ namespace Ex05.WindowsUI
         {
             r_FormGameSettings.FormClosed += r_FormGameSettings_FormClosed;
             r_FormGameSettings.ShowDialog();
-
-            
         }
 
-        public bool ShowGameOverMessage(string message)
+        public bool ShowGameOverMessage(string i_MessageToDisplay)
         {
             bool isAnswerYes = false;
-
-            DialogResult userAnswer = MessageBox.Show(message, "Game Over!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult userAnswer = MessageBox.Show(i_MessageToDisplay, "Game Over!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
             if (userAnswer == DialogResult.Yes)
             {
@@ -489,6 +388,11 @@ namespace Ex05.WindowsUI
             }
 
             return isAnswerYes;
+        }
+
+        private void showInvalidMoveMessage()
+        {
+            MessageBox.Show("You can only move to one of the highlighted tiles!", "Invalid Move", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

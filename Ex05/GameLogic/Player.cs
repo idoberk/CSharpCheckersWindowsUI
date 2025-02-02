@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Ex05
+﻿namespace Ex05
 {
     public class Player
     {
@@ -11,8 +9,6 @@ namespace Ex05
         private int m_PlayerNumber;
         private string m_LastMove;
         private int m_Score = 0;
-
-        private List<PiecePosition> m_PlayerPiecePositions = new List<PiecePosition>();
 
         public string Name
         {
@@ -48,12 +44,6 @@ namespace Ex05
         {
             get { return m_LastMove; }
             set { m_LastMove = value; }
-        }
-
-        public List<PiecePosition> PlayerPiecePositions
-        {
-            get { return m_PlayerPiecePositions; }
-            set { m_PlayerPiecePositions = value; }
         }
 
         public Player(string i_PlayerName, char i_PlayerPiece, ePlayerType i_PlayerType, int i_PlayerNumber)
@@ -100,13 +90,6 @@ namespace Ex05
             bool isKing = (i_Piece == (char)ePlayerPieceType.OPlayerKing || i_Piece == (char)ePlayerPieceType.XPlayerKing);
 
             return isKing;
-        }
-
-        public void PlayerKingPiece()
-        {
-            PlayerPiece = PlayerPiece == (char)ePlayerPieceType.OPlayer
-                            ? (char)ePlayerPieceType.OPlayerKing
-                            : (char)ePlayerPieceType.XPlayerKing;
         }
 
         public bool IsComputer()
