@@ -1,4 +1,6 @@
-﻿namespace Ex05
+﻿using System.Collections.Generic;
+
+namespace Ex05
 {
     public class Player
     {
@@ -9,6 +11,8 @@
         private int m_PlayerNumber;
         private string m_LastMove;
         private int m_Score = 0;
+
+        private List<PiecePosition> m_PlayerPiecePositions = new List<PiecePosition>();
 
         public string Name
         {
@@ -44,6 +48,12 @@
         {
             get { return m_LastMove; }
             set { m_LastMove = value; }
+        }
+
+        public List<PiecePosition> PlayerPiecePositions
+        {
+            get { return m_PlayerPiecePositions; }
+            set { m_PlayerPiecePositions = value; }
         }
 
         public Player(string i_PlayerName, char i_PlayerPiece, ePlayerType i_PlayerType, int i_PlayerNumber)

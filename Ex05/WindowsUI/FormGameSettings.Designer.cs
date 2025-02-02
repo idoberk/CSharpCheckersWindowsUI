@@ -162,7 +162,7 @@
             this.Controls.Add(this.radioButtonSmallBoard);
             this.Controls.Add(this.labelBoardSize);
             this.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormGameSettings";

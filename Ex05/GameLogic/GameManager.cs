@@ -1,6 +1,7 @@
-﻿using Ex05.WindowsUI;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using Ex05.GameLogic;
 using static Ex05.Player;
 
 namespace Ex05
@@ -10,10 +11,12 @@ namespace Ex05
     public class GameManager
     {
         public EventHandler NewGameRoundStarted;
+        public EventHandler BoardUpdated;
+        public EventHandler GameOver;
 
         private GameBoard m_GameBoard;
-        //private Player m_Player1;
-        //private Player m_Player2;
+        private Player m_Player1;
+        private Player m_Player2;
         private Player m_CurrentPlayer;
         private Player m_NextPlayer;
         private List<MovePiece> m_CaptureMoves = new List<MovePiece>();
@@ -43,6 +46,21 @@ namespace Ex05
         public Player NextPlayer
         {
             get { return m_NextPlayer; }
+        }
+
+        public Player Player1
+        {
+            get { return m_Player1; }
+        }
+
+        public Player Player2
+        {
+            get { return m_Player2; }
+        }
+
+        public List<MovePiece> RegularMoves
+        {
+            get { return m_RegularMoves; }
         }
 
         public List<MovePiece> CaptureMoves
@@ -130,16 +148,17 @@ namespace Ex05
         {
             int player2Type = i_IsComputer ? (int)ePlayerType.Computer : (int)ePlayerType.Human;
 
-            m_CurrentPlayer = new Player(i_Player1Name, (char)ePlayerPieceType.OPlayer, ePlayerType.Human, (int)ePlayerNumber.Player1);
-            m_NextPlayer = new Player(i_Player2Name, (char)ePlayerPieceType.XPlayer, (ePlayerType)player2Type, (int)ePlayerNumber.Player2);
+            m_Player1 = new Player(i_Player1Name, (char)ePlayerPieceType.OPlayer, ePlayerType.Human, (int)ePlayerNumber.Player1);
+            m_Player2 = new Player(i_Player2Name, (char)ePlayerPieceType.XPlayer, (ePlayerType)player2Type, (int)ePlayerNumber.Player2);
             m_GameBoard = new GameBoard(i_BoardSize);
 
             OnNewGameRoundStarted();
         }
 
-        public bool IsMoveExecuted(MovePiece i_AttemptedMove)
+        public bool IsMoveExecuted(MovePiece i_AttemptedMove, out bool i_IsCapture)
         {
-            getValidMoves();
+            // getValidMoves();
+            i_IsCapture = true;
 
             if (m_LastMovePosition != null)
             {
@@ -147,26 +166,51 @@ namespace Ex05
                 m_RegularMoves.Clear();
                 char lastMovedPiece = m_GameBoard.GetPieceAtPosition(m_LastMovePosition);
 
-                addMovesToList(m_LastMovePosition, lastMovedPiece, i_IsCapture: true);
+                addMovesToList(m_LastMovePosition, lastMovedPiece, i_IsCapture);
             }
 
             bool isMoveExecuted = false;
 
             if (i_AttemptedMove.IsMoveInList(i_AttemptedMove, m_CaptureMoves))
             {
-                PerformMove(i_AttemptedMove, i_IsCapture: true);
+                PerformMove(i_AttemptedMove, i_IsCapture);
                 isMoveExecuted = true;
             }
             else if (i_AttemptedMove.IsMoveInList(i_AttemptedMove, m_RegularMoves))
             {
-                PerformMove(i_AttemptedMove, i_IsCapture: false);
+                i_IsCapture = false;
+                PerformMove(i_AttemptedMove, i_IsCapture);
                 isMoveExecuted = true;
             }
 
             return isMoveExecuted;
         }
 
-        private void getValidMoves()
+        public List<MovePiece> GetValidMovesForPiece(PiecePosition i_PiecePosition)
+        {
+            List<MovePiece> validMovesList = new List<MovePiece>();
+            char currentPiece = m_GameBoard.GetPieceAtPosition(i_PiecePosition);
+            bool isCapture = true;
+
+            m_RegularMoves.Clear();
+            m_CaptureMoves.Clear();
+            addMovesToList(i_PiecePosition, currentPiece, isCapture);
+
+            if(m_CaptureMoves.Count > 0)
+            {
+                validMovesList.AddRange(m_CaptureMoves);
+            }
+            else
+            {
+                isCapture = false;
+                addMovesToList(i_PiecePosition, currentPiece, isCapture);
+                validMovesList.AddRange(m_RegularMoves);
+            }
+
+            return validMovesList;
+        }
+
+        public void getValidMoves()
         {
             List<PiecePosition> currentPlayerPieces = m_GameBoard.GetPiecesPositionsList(m_CurrentPlayer.PlayerNumber);
             bool isCapture = true;
@@ -184,6 +228,8 @@ namespace Ex05
 
         public void PerformMove(MovePiece i_PlayerMove, bool i_IsCapture)
         {
+            Player movingPlayer = m_CurrentPlayer;
+
             if (i_IsCapture)
             {
                 m_GameBoard.CapturePiece(i_PlayerMove);
@@ -197,6 +243,10 @@ namespace Ex05
                     m_LastMovePosition = null;
                     m_IsTurnFinished = true;
                 }
+                else
+                {
+                    m_IsTurnFinished = false;
+                }
             }
             else
             {
@@ -209,6 +259,18 @@ namespace Ex05
             if (m_IsTurnFinished)
             {
                 switchTurn();
+            }
+
+            OnBoardUpdated(new BoardUpdateEventArgs(i_PlayerMove, movingPlayer, i_IsCapture));
+
+            if (IsGameOver())
+            {
+                HandleGameOver();
+            }
+
+            else if (CurrentPlayer.IsComputer())
+            {
+                computerMove();
             }
         }
 
@@ -319,8 +381,8 @@ namespace Ex05
 
             if (IsPieceKing(charAtPosition))
             {
-                //currentPlayerPiece = currentPlayerPiece == m_Player1.PlayerPiece ? (char)ePlayerPieceType.OPlayerKing : (char)ePlayerPieceType.XPlayerKing;
-                currentPlayerPiece = currentPlayerPiece == CurrentPlayer.PlayerPiece ? (char)ePlayerPieceType.OPlayerKing : (char)ePlayerPieceType.XPlayerKing;
+                currentPlayerPiece = currentPlayerPiece == m_Player1.PlayerPiece ? (char)ePlayerPieceType.OPlayerKing : (char)ePlayerPieceType.XPlayerKing;
+                // currentPlayerPiece = currentPlayerPiece == CurrentPlayer.PlayerPiece ? (char)ePlayerPieceType.OPlayerKing : (char)ePlayerPieceType.XPlayerKing;
             }
 
             bool isPlayerPiece = charAtPosition == currentPlayerPiece;
@@ -423,20 +485,20 @@ namespace Ex05
 
         public void UpdateScore()
         {
-            //int player1Value = calculatePiecesValue(m_Player1.PlayerNumber);
-            //int player2Value = calculatePiecesValue(m_Player2.PlayerNumber);
-            int player1Value = calculatePiecesValue(CurrentPlayer.PlayerNumber);
-            int player2Value = calculatePiecesValue(NextPlayer.PlayerNumber);
+            int player1Value = calculatePiecesValue(m_Player1.PlayerNumber);
+            int player2Value = calculatePiecesValue(m_Player2.PlayerNumber);
             int scoreDifference = Math.Abs(player2Value - player1Value);
 
-            if (m_CurrentPlayer != CurrentPlayer)//m_Player1)
-            {
-                CurrentPlayer.Score += scoreDifference;
-            }
-            else
-            {
-                NextPlayer.Score += scoreDifference;
-            }
+            CurrentPlayer.Score += scoreDifference;
+
+            //if (m_CurrentPlayer == m_Player1)
+            //{
+            //    CurrentPlayer.Score += scoreDifference;
+            //}
+            //else
+            //{
+            //    NextPlayer.Score += scoreDifference;
+            //}
         }
 
         private int calculatePiecesValue(int i_PlayerNumber)
@@ -461,6 +523,26 @@ namespace Ex05
             return totalPiecesValue;
         }
 
+        public void HandleGameOver()
+        {
+            StringBuilder gameResultMessage = new StringBuilder();
+
+            switchTurn();
+
+            if (IsGameOver())
+            {
+                gameResultMessage.AppendLine("Tie!");
+            }
+            else
+            {
+                gameResultMessage.AppendLine($"{CurrentPlayer.Name} Won!");
+            }
+
+            UpdateScore();
+            gameResultMessage.AppendLine("Another Round?");
+            OnGameOver(new GameOverEventArgs(gameResultMessage.ToString()));
+        }
+
         public bool IsGameOver()
         {
             return hasNoRemainingPieces() || hasNoValidMoves();
@@ -483,13 +565,13 @@ namespace Ex05
 
         public void ResetGame()
         {
-            //    m_CurrentPlayer = m_Player1;
-            if (CurrentPlayer.PlayerNumber == (int)ePlayerNumber.Player2)
-            {
-                switchTurn();
-            }
+            m_CurrentPlayer = m_Player1;
+            //if (CurrentPlayer.PlayerNumber == (int)ePlayerNumber.Player2)
+            //{
+            //    switchTurn();
+            //}
 
-            // m_NextPlayer = m_Player2;
+            m_NextPlayer = m_Player2;
             m_CaptureMoves.Clear();
             m_RegularMoves.Clear();
             //m_Player1.LastMove = string.Empty;
@@ -497,6 +579,11 @@ namespace Ex05
             m_GameBoard.Player2Pieces.Clear();
             m_GameBoard.Player1Pieces.Clear();
             m_GameBoard.InitializeBoard();
+        }
+
+        public void HandleComputerTurn()
+        {
+            computerMove();
         }
 
         private void computerMove()
@@ -544,6 +631,22 @@ namespace Ex05
             if (NewGameRoundStarted != null)
             {
                 NewGameRoundStarted(this, e);
+            }
+        }
+
+        protected virtual void OnBoardUpdated(BoardUpdateEventArgs e)
+        {
+            if(BoardUpdated != null)
+            {
+                BoardUpdated(this, e);
+            }
+        }
+
+        protected virtual void OnGameOver(GameOverEventArgs e)
+        {
+            if (GameOver != null)
+            {
+                GameOver(this, e);
             }
         }
     }

@@ -72,6 +72,7 @@ namespace Ex05
                     }
                 }
             }
+            
 
             for(int i = numRows; i <= numRows + 1; i++)
             {

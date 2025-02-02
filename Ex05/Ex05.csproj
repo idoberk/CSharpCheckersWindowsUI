@@ -39,8 +39,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameLogic\BoardUpdateEventArgs.cs" />
     <Compile Include="GameLogic\GameBoard.cs" />
     <Compile Include="GameLogic\GameManager.cs" />
+    <Compile Include="GameLogic\GameOverEventArgs.cs" />
     <Compile Include="GameLogic\MovePiece.cs" />
     <Compile Include="GameLogic\PiecePosition.cs" />
     <Compile Include="GameLogic\Player.cs" />
@@ -62,11 +64,13 @@
       <DependentUpon>FormGameSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowsUI\GameSettingsEventArgs.cs" />
+    <Compile Include="WindowsUI\MoveExecutedEventArgs.cs" />
     <Compile Include="WindowsUI\PictureBoxPlayerPieces.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WindowsUI\Program.cs" />
     <Compile Include="WindowsUI\UIManager.cs" />
+    <Compile Include="WindowsUI\ValidMovesEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

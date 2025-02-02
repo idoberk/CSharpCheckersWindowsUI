@@ -7,7 +7,6 @@ namespace Ex05.WindowsUI
     {
         public FormGameSettings()
         {
-            Application.EnableVisualStyles();
             InitializeComponent();
         }
 

@@ -1,16 +1,15 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Ex05.WindowsUI
 {
     public class PictureBoxPlayerPieces : PictureBox
     {
         private bool m_IsPictureBoxEnabled;
-        private Point m_PlayerPiecePosition;
+        private PiecePosition m_PlayerPiecePosition;
 
         public PictureBoxPlayerPieces(int i_Row, int i_Col)
         {
-            m_PlayerPiecePosition = new Point(i_Row, i_Col);
+            m_PlayerPiecePosition = new PiecePosition(i_Row, i_Col);
         }
 
         public bool IsPictureBoxEnabled
@@ -19,7 +18,7 @@ namespace Ex05.WindowsUI
             set { m_IsPictureBoxEnabled = value; }
         }
 
-        public Point PlayerPiecePosition
+        public PiecePosition PlayerPiecePosition
         {
             get { return m_PlayerPiecePosition; }
         }
