@@ -3,7 +3,7 @@
 <p>A Windows Forms implementation of English Checkers (American Checkers/Draughts) built with C# and .NET Framework.<br>
 This project implements the game's core logic and provides a graphical user interface for an interactive gaming experience.</p>
 
-
+![Game Picture](https://github.com/idoberk/CSharpCheckersWindowsUI/blob/main/Game%20Picture.jpg)
 
 ## Features
 
