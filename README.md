@@ -37,3 +37,6 @@ This project implements the game's core logic and provides a graphical user inte
 - Two-player mode for ***online*** multiplayer
 - Sound effects and animation
 - Customizable themes
+
+
+<p>Was in collaboration with @dekel6749</p>
